@@ -13,29 +13,31 @@ func main() {
 		return
 	}
 	args := os.Args[1]
-	
-	args = strings.ReplaceAll(args, "\n", "\\n") // replaces all the new lines in the arguement with a new line
 
+	args = strings.ReplaceAll(args, "\n", "\\n") // replaces all the new lines in the arguement with a new line
 
 	if args == "\\n" { // if  the arguement is "\n" the program prints a new line
 		fmt.Println()
 		return
 	}
-// checking if the runes of the string in the arguement is not of an ascii decimal value of more than 126
+
+	if args == "" {
+		return
+	}
+	// checking if the runes of the string in the arguement is not of an ascii decimal value of more than 126
 	for _, chr := range args {
-		if chr > 126 {
+		if chr > '~' {
 			fmt.Println("Error : Non Ascii character found!! can not display the graphic representation")
-			os.Exit(1)
-// checks if the arguement is an empty string , and prints nothing incase the condition is met
-		} else if args == "" {
 			return
+			// checks if the arguement is an empty string , and prints nothing incase the condition is met
 		}
 	}
-// asigning a variable, asciiArtFile that's going to store the value of the banner files
+	// asigning a variable, asciiArtFile that's going to store the value of the banner files
 	asciiArtFile := "standard.txt"
 
 	if len(os.Args) == 3 {
 		args2 := os.Args[2]
+		// fmt.Println(args2)
 		switch args2 {
 		case "standard":
 			asciiArtFile = "standard.txt"
@@ -44,22 +46,22 @@ func main() {
 		case "shadow":
 			asciiArtFile = "shadow.txt"
 		default:
-			asciiArtFile = "standard.txt"
+			if !(asciiArtFile == "standard" || asciiArtFile == "thinkertoy" || asciiArtFile == "shadow") {
+				fmt.Println("Invalid banner file\nUsage: standard or shadow or thinkertoy")
+				os.Exit(0)
+			}
 		}
+
 	}
-// the variable inputArgs splits the string(arguement) into substrings, by a separator "\n"
+
+	// the variable inputArgs splits the string(arguement) into substrings, by a separator "\n"
 	inputArgs := strings.Split(args, "\\n")
 	asciiArt, err := os.ReadFile(asciiArtFile) // reading the bannerfile
-	
 	if err != nil {
 		fmt.Println("Error reading file", err)
 	}
 	// the variable asciiArtFile stores the data read from bytes to string
 	asciiArtString := string(asciiArt)
-	if args == asciiArtFile { // if the arguement is a bannerfile (eg: standard / thinkertoy), it should not print it. 
-		fmt.Print()
-		return
-	}
 
 	var bannerFileContents []string
 	if asciiArtFile == "thinkertoy.txt" {
