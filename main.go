@@ -9,8 +9,7 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 3{ // ckecks if the there are three agguements, if not, the programe prints nothing
-		fmt.Println("Usage: go run . [STRING] [BANNER]\n\nEX: go run . something standard")
+	if len(os.Args) > 3 || len(os.Args) < 2 { // ckecks if the there are three agguements, if not, the programe prints nothing
 		return
 	}
 	args := os.Args[1]
@@ -34,26 +33,28 @@ func main() {
 		}
 	}
 	// asigning a variable, asciiArtFile that's going to store the value of the banner files
-	asciiArtFile := os.Args[2]
+	asciiArtFile := "standard.txt"
 
-	// if len(os.Args) == 3 {
-	// 	args2 := os.Args[2]
-	// fmt.Println(args2)
-	switch asciiArtFile {
-	case "standard":
-		asciiArtFile = "standard.txt"
-	case "thinkertoy":
-		asciiArtFile = "thinkertoy.txt"
-	case "shadow":
-		asciiArtFile = "shadow.txt"
-	default:
-		if !(asciiArtFile == "standard" || asciiArtFile == "thinkertoy" || asciiArtFile == "shadow") {
-			fmt.Println("Usage: go run . [STRING] [BANNER]")
-			os.Exit(0)
+	if len(os.Args) == 3 {
+
+		asciiArtFile = os.Args[2]
+		// fmt.Println(args2)
+		switch asciiArtFile {
+		case "standard":
+			asciiArtFile = "standard.txt"
+		case "thinkertoy":
+			asciiArtFile = "thinkertoy.txt"
+		case "shadow":
+			asciiArtFile = "shadow.txt"
+		default:
+			//asciiArtFile = "standard.txt"
+			if !(asciiArtFile == "standard" || asciiArtFile == "thinkertoy" || asciiArtFile == "shadow") {
+			fmt.Println("Invalid banner file")
+			os.Exit(1)
+			}
 		}
-	}
 
-	//}
+	}
 
 	// the variable inputArgs splits the string(arguement) into substrings, by a separator "\n"
 	inputArgs := strings.Split(args, "\\n")
