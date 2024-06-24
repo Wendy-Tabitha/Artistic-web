@@ -60,6 +60,11 @@ func main() {
 	if err != nil {
 		fmt.Println("Error reading file", err)
 	}
+
+	if len(asciiArt) == 0 {
+		fmt.Println("Empty banner file")
+		os.Exit(1)
+	}
 	// the variable asciiArtFile stores the data read from bytes to string
 	asciiArtString := string(asciiArt)
 
