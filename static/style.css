@@ -1,0 +1,18 @@
+body {
+    background-color: bisque;
+}
+
+h1{
+    text-align: center;
+    background-color: azure;
+}
+
+form{
+    text-align: center;
+}
+
+textarea{
+    font-size: larger;
+    font-weight: lighter;
+    font-family: Georgia;
+}

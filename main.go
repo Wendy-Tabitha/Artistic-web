@@ -1,31 +1,19 @@
 package main
 
 import (
+	"ascii-art/handlers"
 	"fmt"
-	"os"
-	"strings"
-
-	"ascii-art/functions"
-	"ascii-art/readfile"
+	"log"
+	"net/http"
 )
 
 func main() {
-	if len(os.Args) > 2 { // ckecks if the there are three agguements, if not, the programe prints nothing
-		return
+	fileServer := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fileServer)
+	http.HandleFunc("/form", handlers.formHandler)
+
+	fmt.Printf("Starting server at port 8080\n")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatal(err)
 	}
-	args := os.Args[1]
-
-	text := functions.Text(args)
-	
-	// asigning a variable, asciiArtFile that's going to store the value of the banner files
-	asciiArtFile := "standard.txt"
-
-	
-
-	// the variable inputArgs splits the string(arguement) into substrings, by a separator "\n"
-	inputArgs := strings.Split(text, "\\n")
-	bannerFileContents := readfile.ReadFile(asciiArtFile)
-
-	output := functions.Graphic(inputArgs, bannerFileContents)
-	fmt.Print(output)
 }
